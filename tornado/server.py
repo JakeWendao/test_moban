@@ -1,24 +1,7 @@
-#!/usr/bin/env python
-#coding:utf-8
-
-import tornado.ioloop
-import tornado.options
-import tornado.httpserver
-
-import sys
-
-from application import application
-
-from tornado.options import define,options
-define("port",default=8888,help="run on th given port",type=int)
-
-def main():
-    tornado.options.parse_command_line()
-    http_server = tornado.httpserver.HTTPServer(application)
-    http_server.listen(options.port)
-    print 'Development server is running at http://127.0.0.1:%s/' % options.port
-    print 'Quit the server with Control-C'
-    tornado.ioloop.IOLoop.instance().start()
-
-if __name__=="__main__":
-    main()
+def log(text):
+	def decorator(func):
+		def wrapper(*args,**kw):
+			print '%s %s():'%(text,func.__name__)
+			return func(*args,**kw)
+		return wrapper
+	return decorator
